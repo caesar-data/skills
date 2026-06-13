@@ -36,7 +36,10 @@ cat /tmp/$SLUG.json
 ```
 
 Options when needed:
-- `--query "<question>"` focuses content selection on what you actually need
+- Omit `--query` for full-document markdown (up to `--max-chars`)
+- `--query "<question>"` focuses content selection on what you actually need;
+  `content.truncated: false` then means the selected excerpt fit, not that the
+  full document was returned
 - `--max-chars N` caps content size (default 12000)
 - The command also answers to `fetch` and `extract`, but write `read` in examples
 

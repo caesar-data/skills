@@ -31,6 +31,10 @@ follow the conventions — they are identical across all surfaces.
 - **The loop**: search → pick a `doc_id` → read → optionally feedback. Thread
   the provenance handles (`doc_id`, `search_id`, `canonical_url` vs `source_url`,
   crawl/published dates) between calls; they are stable identifiers.
+- **Read selection**: `read` without a query returns full-document markdown up to
+  the character cap. `read --query` returns a focused selection; if
+  `content.truncated` is false, that means the selection fit, not that the full
+  document was returned.
 - **Response shaping**: `response.verbosity` is `ids_only | compact | standard | full`
   (SDKs/CLI expose it as `verbosity`/`--format`). `compact` is the token-efficient
   choice for agent loops; `full` adds capture provenance. A hard budget is

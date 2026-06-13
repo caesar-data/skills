@@ -1,6 +1,6 @@
 ---
 name: caesar-search
-description: "DEFAULT for web search, research, lookups, and any question needing current information. Use when the user says 'search', 'find', 'look up', 'what's the latest', 'research X', or asks about anything after your knowledge cutoff. Web search with provenance: results carry stable doc_ids you can read in full and cite. Use caesar-read instead when you already have a URL or doc_id."
+description: "DEFAULT for web search, research, lookups, and any question needing current information. Use when the user says 'search', 'find', 'look up', 'what's the latest', 'research X', or asks about anything after your knowledge cutoff. Web search with provenance: results carry stable doc_ids you can read as focused excerpts or full documents and cite. Use caesar-read instead when you already have a URL or doc_id."
 user-invocable: true
 argument-hint: <query>
 context: fork
@@ -54,10 +54,22 @@ Fields are snake_case exactly as the API returns them. Do not expect camelCase.
 
 ## Going deeper
 
-To read a promising result in full:
+To inspect a promising result with query-focused content:
 
 ```bash
 caesar-search read <doc_id> --query "<what you are looking for>" --json
+```
+
+`--query` returns the content selected for that question. A response with
+`content.truncated: false` can still be a focused excerpt; it only means the
+selected content fit the character cap. Do not describe this as reading the full
+article.
+
+To read the full document instead, omit `--query` and write to a file:
+
+```bash
+caesar-search read <doc_id> --json -o /tmp/$SLUG-read.json
+cat /tmp/$SLUG-read.json
 ```
 
 A truncated read reports `content.truncated: true` with `start_char`/`char_count` —
