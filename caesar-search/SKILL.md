@@ -40,7 +40,6 @@ truncate it; `cat` the file to parse it. Do not cap output tokens on the command
 
 Options when needed:
 - `--mode fast` for quick lookups; `--mode research` only when the user asks for depth
-- `--objective TEXT` to steer ranking when the query alone is ambiguous
 - `--format standard` when you need quotable passages (compact is the token-efficient default)
 - `--max-results`: a few → 5; comprehensive → 20; user-specified → match it
 
