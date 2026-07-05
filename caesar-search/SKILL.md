@@ -12,6 +12,10 @@ metadata:
   author: caesar
 ---
 
+<!-- Maintained in two places: this public skills repo and an embedded copy in
+the search API server (served via //go:embed). Edit both together — they must
+stay byte-identical. -->
+
 # Web Search
 
 Search the web for: $ARGUMENTS
@@ -53,7 +57,28 @@ Fields are snake_case exactly as the API returns them. Do not expect camelCase.
 
 ## Going deeper
 
-To inspect a promising result with query-focused content:
+Read a promising result — or any URL you already have — **local-browser-first**.
+A plain URL read renders the page with your own browser, validates the result, and
+only falls back to the server (`/v1/document`) when the local render did not come
+back clean. On success there is no server round-trip, so it is faster and cheaper.
+This is the default; prefer it:
+
+```bash
+caesar-search read "<canonical_url>" --json -o /tmp/$SLUG-read.json
+cat /tmp/$SLUG-read.json
+```
+
+Expect a `local_render` warning when your browser was used. A local render is not a
+server capture, so the read returns **no `doc_id`** — reuse the `doc_id` from the
+search result for citation and feedback. If the local browser cannot render the
+page, the read transparently falls back to the server and adds a
+`local_render_fallback` warning; you still get content. Reading several URLs? Do one
+read each — every read is local-first.
+
+Only when you specifically want the **server** to pre-select the passages relevant
+to a question — a very large document, or a focused excerpt instead of the full
+page — read by `doc_id` with `--query`. This always goes to the server (local render
+cannot do query selection) and returns a `doc_id`:
 
 ```bash
 caesar-search read <doc_id> --query "<what you are looking for>" --json
@@ -64,15 +89,14 @@ caesar-search read <doc_id> --query "<what you are looking for>" --json
 selected content fit the character cap. Do not describe this as reading the full
 article.
 
-To read the full document instead, omit `--query` and write to a file:
+Most pages fit in one read. If a read reports `content.truncated: true`, continue
+with `--start-char <start+count>` (do not retry with a bigger `--max-chars`).
+Continuation is served from the canonical document, so to page through a very long
+document with consistent offsets, read it by `doc_id` instead.
 
-```bash
-caesar-search read <doc_id> --json -o /tmp/$SLUG-read.json
-cat /tmp/$SLUG-read.json
-```
-
-A truncated read reports `content.truncated: true` with `start_char`/`char_count` —
-continue with `--start-char <start+count>`. Do not retry with a bigger `--max-chars`.
+A `read` can also return a `bot_wall_skipped` warning with **empty content**: the
+page is behind a bot/CAPTCHA wall. It exits `0` but was not read — treat it as a
+skip (branch on the warning `code`, not the exit code) and read a different result.
 
 ## Response format
 
