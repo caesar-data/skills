@@ -91,8 +91,10 @@ article.
 
 Most pages fit in one read. If a read reports `content.truncated: true`, continue
 with `--start-char <start+count>` (do not retry with a bigger `--max-chars`).
-Continuation is served from the canonical document, so to page through a very long
-document with consistent offsets, read it by `doc_id` instead.
+Offsets are consistent within one path: a URL continuation is served by the same
+local render, a `doc_id` continuation by the same server document. If a URL
+continuation reports `local_render_fallback`, its offsets index the server's
+extraction instead — re-read from `--start-char 0` rather than stitching.
 
 A `read` can also return a `bot_wall_skipped` warning with **empty content**: the
 page is behind a bot/CAPTCHA wall. It exits `0` but was not read — treat it as a
