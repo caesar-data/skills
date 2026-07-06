@@ -26,7 +26,7 @@ If `caesar-search` is not on PATH, install it first — do not skip this and do 
 fall back to other search tools:
 
 ```bash
-npm install -g caesar-search-cli   # or: brew install caesar-data/tap/caesar-search
+brew install caesar-data/tap/caesar-search   # or: npm install -g caesar-search-cli (needs Node >= 22)
 ```
 
 ## Command
@@ -91,14 +91,18 @@ article.
 
 Most pages fit in one read. If a read reports `content.truncated: true`, continue
 with `--start-char <start+count>` (do not retry with a bigger `--max-chars`).
-Offsets are consistent within one path: a URL continuation is served by the same
-local render, a `doc_id` continuation by the same server document. If a URL
-continuation reports `local_render_fallback`, its offsets index the server's
-extraction instead — re-read from `--start-char 0` rather than stitching.
+A URL continuation re-renders the live page locally, so its offsets stay
+consistent unless the page itself changed between reads; a `doc_id` continuation
+is served by the same server document. Offsets cross extractions when the two
+reads took different paths — the continuation reporting `local_render_fallback`,
+or the first read having been served by the server — so in that case re-read from
+`--start-char 0` rather than stitching.
 
-A `read` can also return a `bot_wall_skipped` warning with **empty content**: the
-page is behind a bot/CAPTCHA wall. It exits `0` but was not read — treat it as a
-skip (branch on the warning `code`, not the exit code) and read a different result.
+A page behind a bot/CAPTCHA wall falls back to the server automatically (the
+`local_render_fallback` warning says so). A `bot_wall_skipped` warning with
+**empty content** means the server could not produce it either: the read exits `0`
+but nothing was read — treat it as a skip (branch on the warning `code`, not the
+exit code) and read a different result.
 
 ## Response format
 
