@@ -5,7 +5,7 @@ user-invocable: true
 argument-hint: <query>
 context: fork
 agent: caesar-subagent
-compatibility: Requires the caesar-search CLI and network access. CAESAR_API_KEY optional (anonymous tier is rate-limited).
+compatibility: Requires the caesar-search CLI, network access, and CAESAR_API_KEY or a stored CLI key.
 allowed-tools: Bash(caesar-search:*)
 license: MIT
 metadata:
@@ -83,8 +83,8 @@ send feedback: `caesar-search feedback --event-type result_helpful --search-id $
 
 ## Errors
 
-- exit 3 (auth): check `CAESAR_API_KEY` or run `caesar-search auth login`; the
-  anonymous tier works at a lower rate limit. For full setup run /caesar-setup
+- exit 3 (auth): check `CAESAR_API_KEY` or run `caesar-search auth login`.
+  For full setup run /caesar-setup
 - exit 4 (API): the CLI retries with backoff automatically; report the envelope's
   `error.hint` to the user
 - unknown flag or command: the CLI is outdated — run `caesar-search update`, then retry

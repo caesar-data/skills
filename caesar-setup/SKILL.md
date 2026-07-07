@@ -44,12 +44,10 @@ checksums and lands in `~/.local/bin` (make sure that is on PATH).
 caesar-search auth status --json
 ```
 
-- Anonymous access works at a lower rate limit — searching is possible with no
-  key at all, so do not block on auth for casual use.
-- For a key: ask the user to set `CAESAR_API_KEY`, or store one with
-  `caesar-search auth login` (interactive) / `caesar-search auth login --key -`
-  fed from a secret manager. NEVER ask the user to paste a key into chat, and
-  never echo keys.
+- Search, read, and feedback require an API key. Ask the user to set
+  `CAESAR_API_KEY`, or store one with `caesar-search auth login` (interactive) /
+  `caesar-search auth login --key -` fed from a secret manager. NEVER ask the
+  user to paste a key into chat, and never echo keys.
 
 ## 4. Verify
 
