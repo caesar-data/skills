@@ -21,6 +21,7 @@ The skills are:
 - `caesar-read` - read a URL or `doc_id` as clean markdown with provenance.
 - `caesar-setup` - install, authenticate, verify, and update the CLI.
 - `caesar-best-practices` - implementation guidance for Caesar integrations.
+- `caesar-connect` - connect the Caesar remote MCP server to a host app (one-click OAuth or Bearer key).
 
 For Claude Code, the API-hosted installer also writes the bundled
 `caesar-subagent` file:
