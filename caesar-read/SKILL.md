@@ -61,7 +61,7 @@ Fields are snake_case exactly as the API returns them.
 ## Errors
 
 - exit 2 with a URL message: the target was probably a bare domain — pass a full URL
-- exit 3 (auth): check `CAESAR_API_KEY` or run `caesar-search auth login`.
+- exit 3 (auth): check `CAESAR_API_KEY` or run `caesar-search auth login` (opens a browser; `--device` over SSH).
   For full setup run /caesar-setup
 - exit 4 (API): the CLI retries with backoff automatically; report `error.hint`
 - unknown flag or command: the CLI is outdated — run `caesar-search update`, then retry

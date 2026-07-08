@@ -83,7 +83,7 @@ send feedback: `caesar-search feedback --event-type result_helpful --search-id $
 
 ## Errors
 
-- exit 3 (auth): check `CAESAR_API_KEY` or run `caesar-search auth login`.
+- exit 3 (auth): check `CAESAR_API_KEY` or run `caesar-search auth login` (opens a browser; `--device` over SSH).
   For full setup run /caesar-setup
 - exit 4 (API): the CLI retries with backoff automatically; report the envelope's
   `error.hint` to the user

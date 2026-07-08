@@ -44,10 +44,16 @@ checksums and lands in `~/.local/bin` (make sure that is on PATH).
 caesar-search auth status --json
 ```
 
-- Search, read, and feedback require an API key. Ask the user to set
-  `CAESAR_API_KEY`, or store one with `caesar-search auth login` (interactive) /
+- Search, read, and feedback require an API key. The default fix is
+  `caesar-search auth login` — it opens the user's browser and stores a named,
+  revocable key (OS keychain, 0600 file fallback). Over SSH or in a container,
+  use `caesar-search auth login --device` (short code, approve on any device).
+  For CI, ask the user to set `CAESAR_API_KEY`, or store a key with
   `caesar-search auth login --key -` fed from a secret manager. NEVER ask the
   user to paste a key into chat, and never echo keys.
+- If the agent runs inside an MCP-capable host (Claude, ChatGPT, Cursor),
+  connecting the Caesar connector in the host is an alternative to installing
+  the CLI — see the caesar-connect skill.
 
 ## 4. Verify
 

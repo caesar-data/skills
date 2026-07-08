@@ -25,9 +25,11 @@ follow the conventions — they are identical across all surfaces.
 
 ## Conventions that hold everywhere
 
-- **Auth**: `Authorization: Bearer $CAESAR_API_KEY`; env var `CAESAR_API_KEY`;
-  base URL override `CAESAR_BASE_URL`. Runtime API calls require a key. Never
-  hardcode or log keys.
+- **Auth**: `Authorization: Bearer $CAESAR_API_KEY`; env var `CAESAR_API_KEY`
+  (CI) or `caesar-search auth login` (interactive — opens a browser, stores a
+  named revocable key; `--device` over SSH); MCP hosts can instead connect the
+  Caesar connector with one-click OAuth. Base URL override `CAESAR_BASE_URL`.
+  Runtime API calls require a credential. Never hardcode or log keys.
 - **The loop**: search → pick a `doc_id` → read → optionally feedback. Thread
   the provenance handles (`doc_id`, `search_id`, `canonical_url` vs `source_url`,
   crawl/published dates) between calls; they are stable identifiers.
