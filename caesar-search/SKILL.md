@@ -39,7 +39,7 @@ cat /tmp/$SLUG.json
 truncate it; `cat` the file to parse it. Do not cap output tokens on the command.
 
 Options when needed:
-- `--mode fast` for quick lookups; `--mode research` only when the user asks for depth
+- `--mode research` only when the user asks for depth; the default `standard` is right for everything else
 - `--format standard` when you need quotable passages (compact is the token-efficient default)
 - `--max-results`: a few → 5; comprehensive → 20; user-specified → match it
 
@@ -95,6 +95,6 @@ send feedback: `caesar-search feedback --event-type result_helpful --search-id $
 |---|---|
 | `--results`, `--limit`, `-n` | The flag is `--max-results` |
 | `--response-format` | The flag is `--format` (ids_only, compact, standard, full) |
-| `--mode deep` / `--mode quick` | Modes are exactly `fast`, `standard`, `research` |
+| `--mode deep` / `--mode quick` | Modes are exactly `standard`, `research` |
 | Parsing human output | Use `--json`; human output is not a stable interface |
 | Shell-redirecting and also reading stdout | Use `-o <file>`; it suppresses stdout |
