@@ -25,18 +25,21 @@ place; `caesar-search update --check --json` reports without changing anything).
 
 ## 2. Install
 
-Pick whichever package manager is available, in this order:
+Prefer the self-contained binary channels — they bundle their own runtime, so
+nothing on the machine can be too old. Pick the first available, in this order:
 
 ```bash
-npm install -g caesar-search-cli
-# or
 brew install caesar-data/tap/caesar-search
 # or
 curl -fsSL https://raw.githubusercontent.com/caesar-data/caesar-search-cli/main/install.sh | bash
+# or (needs Node >= 22 — the local-render path requires it)
+npm install -g caesar-search-cli
 ```
 
-The npm package has no postinstall scripts. The curl installer verifies sha256
-checksums and lands in `~/.local/bin` (make sure that is on PATH).
+The curl installer verifies sha256 checksums and lands in `~/.local/bin` (make
+sure that is on PATH). The npm package has no postinstall scripts but runs under
+the system Node: on Node < 22 reads work but always use the server, so prefer
+brew/curl there.
 
 ## 3. Authenticate
 
